@@ -66,9 +66,4 @@ This is a complete, single-file interactive HTML activity designed for ESL/ESOL 
 3. Add your sentence in `.sentence-box`
 4. Define answers in JavaScript `sentenceElementAnswers`
 
-```javascript
-11: {
-  s: "your subject here",
-  v: "your verb phrase",
-  o: "your object"
-}
+
