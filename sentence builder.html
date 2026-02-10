@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verb Tenses & Sentence Elements Practice</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 1.5rem;
+      background: #f5f7fb;
+      color: #222;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #223566;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .section-header h2 {
+      margin: 0.2rem 0;
+      font-size: 1.1rem;
+    }
+    .toggle-btn {
+      font-size: 0.85rem;
+      color: #223566;
+      border: 1px solid #223566;
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      background: #fff;
+    }
+    .collapsed .section-body {
+      display: none;
+    }
+    .tip {
+      font-size: 0.9rem;
+      background: #eef2ff;
+      border-left: 4px solid #223566;
+      padding: 0.4rem 0.6rem;
+      margin: 0.4rem 0 0.7rem;
+    }
+    .exercise {
+      margin: 0.4rem 0 0.7rem;
+    }
+    .exercise p {
+      margin: 0.2rem 0 0.4rem;
+    }
+    input[type="text"], select {
+      padding: 0.15rem 0.25rem;
+      font-size: 0.95rem;
+      margin: 0.1rem 0;
+    }
+    button.check-btn, button.reset-btn {
+      margin-top: 0.4rem;
+      margin-right: 0.4rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    button.check-btn {
+      background: #223566;
+      color: #fff;
+    }
+    button.reset-btn {
+      background: #e0e4f5;
+      color: #223566;
+    }
+    .feedback {
+      margin-top: 0.3rem;
+      font-size: 0.9rem;
+      min-height: 1.1rem;
+    }
+    .correct {
+      color: #0a7a3b;
+    }
+    .incorrect {
+      color: #b00020;
+    }
+    .sentence-box {
+      background: #f8f9ff;
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      margin-top: 0.2rem;
+      border: 1px solid #dde1ff;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.05rem 0.35rem;
+      border-radius: 999px;
+      color: #fff;
+      margin-right: 0.25rem;
+    }
+    .tag-present { background: #0077b6; }
+    .tag-past { background: #6a4c93; }
+    .tag-future { background: #ff8800; }
+    .tag-simple { background: #2a9d8f; }
+    .tag-continuous { background: #e76f51; }
+    .tag-perfect { background: #8a508f; }
+    .small {
+      font-size: 0.85rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.7rem;
+    }
+    @media (max-width: 600px) {
+      body { padding: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Verb Tenses & Sentence Elements</h1>
+  <p class="small" style="text-align:center; max-width:650px; margin:0 auto 1rem;">
+    Practice identifying sentence elements (subject, verb, object, complements, modifiers) and matching them with the correct verb tenses (present, past, future; simple, continuous, perfect).
+  </p>
+
+  <!-- SECTION 1: Warm-up: Identify sentence elements -->
+  <div class="section" id="section1">
+    <div class="section-header">
+      <h2>1. Warm-up: Sentence elements</h2>
+      <button class="toggle-btn" onclick="toggleSection('section1')">Hide/Show</button>
+    </div>
+    <div class="section-body">
+      <div class="tip">
+        Every complete sentence needs a subject and a predicate, which always includes a verb. Objects, complements, and modifiers add extra information. [web:10]
+      </div>
+
+      <div class="exercise" data-ex="1">
+        <p>
+          a) <span class="sentence-box">The students are reading a novel in the library.</span>
+        </p>
+        <p class="small">
+          Identify the elements: subject (S), main verb (V), object (O), place/time modifier (M).
+        </p>
+        Subject:
+        <input type="text" data-role="s" size="18" placeholder="write the words" />
+        Verb:
+        <input type="text" data-role="v" size="10" />
+        Object:
+        <input type="text" data-role="o" size="16" />
+        Modifier:
+        <input type="text" data-role="m" size="18" />
+        <br/>
+        <button class="check-btn" onclick="checkSentenceElements(1)">Check</button>
+        <button class="reset-btn" onclick="resetExercise(1)">Reset</button>
+        <div class="feedback" id="fb-1"></div>
+      </div>
+
+      <div class="exercise" data-ex="2">
+        <p>
+          b) <span class="sentence-box">My brother is a talented musician.</span>
+        </p>
+        <p class="small">
+          Identify: subject (S), linking verb (V), complement (C).
+        </p>
+        Subject:
+        <input type="text" data-role="s" size="16" />
+        Verb:
+        <input type="text" data-role="v" size="10" />
+        Complement:
+        <input type="text" data-role="c" size="18" />
+        <br/>
+        <button class="check-btn" onclick="checkSentenceElements(2)">Check</button>
+        <button class="reset-btn" onclick="resetExercise(2)">Reset</button>
+        <div class="feedback" id="fb-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Match tenses to timelines -->
+  <div class="section" id="section2">
+    <div class="section-header">
+      <h2>2. Verb tenses and time</h2>
+      <button class="toggle-btn" onclick="toggleSection('section2')">Hide/Show</button>
+    </div>
+    <div class="section-body">
+      <div class="tip">
+        Present tenses talk about now or routines, past tenses about finished events, and future tenses about things that will happen. Simple, continuous, and perfect tenses give extra detail about time and duration. [web:6][web:12][web:13]
+      </div>
+
+      <div class="grid-2">
+        <div class="exercise" data-ex="3">
+          <p>
+            a) <span class="sentence-box">
+              She <strong>is studying</strong> for the exam right now.
+              <span class="tag tag-present">present</span><span class="tag tag-continuous">continuous</span>
+            </span>
+          </p>
+          <p class="small">Choose the time meaning and form.</p>
+          Time:
+          <select data-role="time">
+            <option value="">-- choose --</option>
+            <option value="present">Present</option>
+            <option value="past">Past</option>
+            <option value="future">Future</option>
+          </select>
+          Form:
+          <select data-role="form">
+            <option value="">-- choose --</option>
+            <option value="simple">Simple</option>
+            <option value="continuous">Continuous</option>
+            <option value="perfect">Perfect</option>
+          </select>
+          <br/>
+          <button class="check-btn" onclick="checkTenseType(3)">Check</button>
+          <button class="reset-btn" onclick="resetExercise(3)">Reset</button>
+          <div class="feedback" id="fb-3"></div>
+        </div>
+
+        <div class="exercise" data-ex="4">
+          <p>
+            b) <span class="sentence-box">
+              They <strong>have finished</strong> their homework.
+              <span class="tag tag-present">present</span><span class="tag tag-perfect">perfect</span>
+            </span>
+          </p>
+          Time:
+          <select data-role="time">
+            <option value="">-- choose --</option>
+            <option value="present">Present</option>
+            <option value="past">Past</option>
+            <option value="future">Future</option>
+          </select>
+          Form:
+          <select data-role="form">
+            <option value="">-- choose --</option>
+            <option value="simple">Simple</option>
+            <option value="continuous">Continuous</option>
+            <option value="perfect">Perfect</option>
+          </select>
+          <br/>
+          <button class="check-btn" onclick="checkTenseType(4)">Check</button>
+          <button class="reset-btn" onclick="resetExercise(4)">Reset</button>
+          <div class="feedback" id="fb-4"></div>
+        </div>
+
+        <div class="exercise" data-ex="5">
+          <p>
+            c) <span class="sentence-box">
+              We <strong>will visit</strong> our grandparents next weekend.
+              <span class="tag tag-future">future</span><span class="tag tag-simple">simple</span>
+            </span>
+          </p>
+          Time:
+          <select data-role="time">
+            <option value="">-- choose --</option>
+            <option value="present">Present</option>
+            <option value="past">Past</option>
+            <option value="future">Future</option>
+          </select>
+          Form:
+          <select data-role="form">
+            <option value="">-- choose --</option>
+            <option value="simple">Simple</option>
+            <option value="continuous">Continuous</option>
+            <option value="perfect">Perfect</option>
+          </select>
+          <br/>
+          <button class="check-btn" onclick="checkTenseType(5)">Check</button>
+          <button class="reset-btn" onclick="resetExercise(5)">Reset</button>
+          <div class="feedback" id="fb-5"></div>
+        </div>
+
+        <div class="exercise" data-ex="6">
+          <p>
+            d) <span class="sentence-box">
+              He <strong>was watching</strong> TV when I called.
+              <span class="tag tag-past">past</span><span class="tag tag-continuous">continuous</span>
+            </span>
+          </p>
+          Time:
+          <select data-role="time">
+            <option value="">-- choose --</option>
+            <option value="present">Present</option>
+            <option value="past">Past</option>
+            <option value="future">Future</option>
+          </select>
+          Form:
+          <select data-role="form">
+            <option value="">-- choose --</option>
+            <option value="simple">Simple</option>
+            <option value="continuous">Continuous</option>
+            <option value="perfect">Perfect</option>
+          </select>
+          <br/>
+          <button class="check-btn" onclick="checkTenseType(6)">Check</button>
+          <button class="reset-btn" onclick="resetExercise(6)">Reset</button>
+          <div class="feedback" id="fb-6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Connect tense and sentence elements -->
+  <div class="section" id="section3">
+    <div class="section-header">
+      <h2>3. Connect tense & elements</h2>
+      <button class="toggle-btn" onclick="toggleSection('section3')">Hide/Show</button>
+    </div>
+    <div class="section-body">
+      <div class="tip">
+        The sentence pattern (S–V, S–V–O, S–V–C, etc.) stays the same when you change the verb tense. [web:13]
+      </div>
+
+      <div class="exercise" data-ex="7">
+        <p>
+          a) Change this present simple sentence into past continuous. Keep the same subject and object.
+        </p>
+        <p class="sentence-box">
+          Original: The children play football in the park every afternoon.
+        </p>
+        <p class="small">
+          Write a new sentence in the past continuous tense (S–V–O–M).
+        </p>
+        <input type="text" data-role="sentence" style="width:100%;" placeholder="Type your sentence here..." />
+        <br/>
+        <button class="check-btn" onclick="checkOpenSentence(7)">Show model answer</button>
+        <button class="reset-btn" onclick="resetExercise(7)">Clear</button>
+        <div class="feedback" id="fb-7"></div>
+      </div>
+
+      <div class="exercise" data-ex="8">
+        <p>
+          b) Complete the sentence with the correct tense and element.
+        </p>
+        <p class="sentence-box">
+          Yesterday at 8 p.m., <input type="text" data-role="s" size="18" placeholder="subject" /
+
