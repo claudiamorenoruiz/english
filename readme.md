@@ -1,4 +1,4 @@
-https://claudiamorenoruiz.github.io/english/sentences_order_and_tenses.html
+https://claudiamorenoruiz.github.io/english/sentence_order_and_tenses.html
 
 # English Grammar Practice Customizable
 
