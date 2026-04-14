@@ -1,69 +1,102 @@
 https://claudiamorenoruiz.github.io/english/sentence_builder.html
 
-# Verb Tenses & Sentence Elements Interactive HTML Activity
+# English Grammar Practice Customizable
 
-## Overview
-This is a complete, single-file interactive HTML activity designed for ESL/ESOL secondary students to practice identifying basic sentence elements (subject, verb, object, complement, modifier) alongside key English verb tenses (present/past/future simple/continuous/perfect). Perfect for classroom use, Moodle embedding, or homework assignments.
+An interactive, self-contained HTML grammar practice tool for English learners and classrooms. It lets teachers and students choose difficulty levels and grammar points, then generates a randomized set of exercises with instant feedback and a built-in grammar reference.
 
-**Target audience**: B1-B2 level secondary students preparing for Cambridge exams or PAU/EBAU.
+## Features
 
-**Features**:
-- 4 collapsible sections with 10 progressive exercises
-- Immediate feedback on every answer
-- No server required – works offline in any browser
-- Responsive design for tablets/phones
-- Easy to customize (edit sentences/answers in the code)
+- Customizable grammar practice by **difficulty level**:
+  - Basic
+  - Intermediate
+  - Advanced
+- Select specific grammar points and tenses.
+- Randomized exercise sets each time you load or reset the activity.
+- Multiple exercise types:
+  - Sentence ordering
+  - Gap-fill
+  - Puzzle-style verb selection
+  - Multiple-choice questions
+- Instant feedback for each answer.
+- Progress tracking with score and completion bar.
+- Quick tense reference panel that updates according to the selected grammar points.
+- Designed as a single-file classroom resource, with no extra setup required.
 
-## File Structure
+## Included grammar points
 
+The activity covers a range of structures, including:
 
-## Sections & Learning Objectives
+- Present Simple
+- Present Continuous
+- Past Simple
+- Past Continuous
+- Present Perfect
+- Present Perfect Continuous
+- Past Perfect
+- Past Perfect Continuous
+- Future with `will`
+- Future with `going to`
+- Present Continuous with future meaning
+- Future Continuous
+- Future Perfect
+- Sentence structure
 
-### 1. Warm-up: Sentence Elements
-- Identify S, V, O, C, M in sample sentences
-- Recognize basic sentence patterns (S-V-O, S-V-C)
+## How it works
 
-**Example**: `The students are reading a novel in the library.` → S: "the students", V: "are reading", O: "a novel", M: "in the library"
+1. Open the HTML file in a browser.
+2. Choose one or more difficulty levels.
+3. Select the grammar points you want to practice.
+4. Click **Apply selection**.
+5. Complete the generated exercises.
+6. Use **Check all answers** or check them one by one.
+7. Click **New random set** to generate a different group of tasks.
 
-### 2. Verb Tenses and Time
-- Match verb forms to time (present/past/future) and aspect (simple/continuous/perfect)
-- Visual tags show correct answers
+## Use cases
 
-**Examples**:
-- `She is studying` → Present Continuous
-- `They have finished` → Present Perfect
-- `We will visit` → Future Simple
+- Classroom grammar revision.
+- Exam preparation.
+- Independent practice.
+- Differentiated learning by level.
+- Quick review of tenses and sentence structure.
 
-### 3. Connect Tense & Elements
-- Transform sentences between tenses while maintaining structure
-- Guided production: build sentences with required elements
+## Requirements
 
-### 4. Mini Quiz
-- Combined analysis: identify both elements AND tense
-- Application-level questions
+- A modern web browser.
+- No installation or external dependencies are required.
+- Internet access is optional, but the page uses Google Fonts for styling.
 
-## How to Use
+## File structure
 
-### In Classroom
-1. Save as `tenses_sentence_elements.html`
-2. Double-click to open in browser (Chrome/Firefox/Edge/Safari)
-3. Project on smartboard or share link
-4. Students work individually/pairs, click "Check" for instant feedback
+```text
+english-grammar-practice-customizable.html
+README.md
+```
 
-### Digital Platforms
+## How to use in GitHub
 
+1. Create a new repository on GitHub.
+2. Upload `english-grammar-practice-customizable.html`.
+3. Add this `README.md` file to the same repository.
+4. Commit and push both files.
 
-### Teacher Demo Mode
-- Click "Hide/Show" buttons to reveal sections progressively
-- Use "Reset" to retry exercises
-- Model answers appear in feedback
+## Editing the activity
 
-## Customization Guide
+The HTML file is fully customizable. You can expand it by editing the exercise bank inside the script section and adding:
 
-### Add New Sentences
-1. Copy an existing `.exercise` div
-2. Update `data-ex="11"` (next number)
-3. Add your sentence in `.sentence-box`
-4. Define answers in JavaScript `sentenceElementAnswers`
+- More exercises.
+- More tenses or grammar points.
+- More difficulty levels.
+- Alternative answers.
+- New question types.
+
+## Notes for teachers
+
+- The resource is especially useful for mixed-ability groups.
+- Students can work only with the levels and tenses they have already studied.
+- The quick reference section helps learners review grammar meaning before answering.
+
+## License
+
+Add your preferred license here if you plan to publish or share the project publicly.
 
 
