@@ -2,347 +2,816 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Verb Tenses & Sentence Elements Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Grammar Practice Customizable</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef4ff;
+      --surface-3: #f8fbff;
+      --text: #1f2937;
+      --muted: #5b6472;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #1f8a4c;
+      --success-bg: #e9f8ef;
+      --error: #b42318;
+      --error-bg: #fdeeed;
+      --warning: #9a6700;
+      --warning-bg: #fff8e6;
+      --border: #d8e0ef;
+      --shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+      --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
-      padding: 1.5rem;
-      background: #f5f7fb;
-      color: #222;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, #f7faff 0%, #eef5ff 100%);
+      color: var(--text);
+      line-height: 1.6;
     }
-    h1, h2 {
-      text-align: center;
-      color: #223566;
+    .container { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 32px 0 20px; }
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #eef4ff 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
     }
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
+    .hero-grid, .tense-grid, .summary-grid, .reference-grid, .filters-grid {
+      display: grid;
+      gap: 18px;
     }
-    .section {
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    .hero-grid { grid-template-columns: 1.3fr 0.9fr; align-items: start; }
+    .tense-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .reference-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .summary-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .filters-grid { grid-template-columns: 1fr 1fr; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
     }
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
+    .mini-card {
+      background: var(--surface-2);
+      border: 1px solid #d5e4ff;
+      border-radius: 16px;
+      padding: 16px;
     }
-    .section-header h2 {
-      margin: 0.2rem 0;
-      font-size: 1.1rem;
-    }
-    .toggle-btn {
-      font-size: 0.85rem;
-      color: #223566;
-      border: 1px solid #223566;
-      border-radius: 4px;
-      padding: 0.15rem 0.5rem;
-      background: #fff;
-    }
-    .collapsed .section-body {
-      display: none;
-    }
-    .tip {
-      font-size: 0.9rem;
-      background: #eef2ff;
-      border-left: 4px solid #223566;
-      padding: 0.4rem 0.6rem;
-      margin: 0.4rem 0 0.7rem;
-    }
-    .exercise {
-      margin: 0.4rem 0 0.7rem;
-    }
-    .exercise p {
-      margin: 0.2rem 0 0.4rem;
-    }
-    input[type="text"], select {
-      padding: 0.15rem 0.25rem;
-      font-size: 0.95rem;
-      margin: 0.1rem 0;
-    }
-    button.check-btn, button.reset-btn {
-      margin-top: 0.4rem;
-      margin-right: 0.4rem;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      border: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    button.check-btn {
-      background: #223566;
-      color: #fff;
-    }
-    button.reset-btn {
-      background: #e0e4f5;
-      color: #223566;
-    }
-    .feedback {
-      margin-top: 0.3rem;
-      font-size: 0.9rem;
-      min-height: 1.1rem;
-    }
-    .correct {
-      color: #0a7a3b;
-    }
-    .incorrect {
-      color: #b00020;
-    }
-    .sentence-box {
-      background: #f8f9ff;
-      border-radius: 6px;
-      padding: 0.4rem 0.6rem;
-      margin-top: 0.2rem;
-      border: 1px solid #dde1ff;
+    .tag, .pill, .chip, .level-badge, .meta-chip {
+      display: inline-block;
+      border-radius: 999px;
+      font-weight: 800;
     }
     .tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 0.05rem 0.35rem;
-      border-radius: 999px;
-      color: #fff;
-      margin-right: 0.25rem;
+      background: #dbeafe;
+      color: var(--primary-dark);
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
     }
-    .tag-present { background: #0077b6; }
-    .tag-past { background: #6a4c93; }
-    .tag-future { background: #ff8800; }
-    .tag-simple { background: #2a9d8f; }
-    .tag-continuous { background: #e76f51; }
-    .tag-perfect { background: #8a508f; }
-    .small {
-      font-size: 0.85rem;
+    .pill-row, .sentence-structure, .actions, .word-bank, .tense-checks, .difficulty-checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .grid-2 {
+    .pill {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #c7dbff;
+      padding: 8px 12px;
+      font-size: 0.92rem;
+    }
+    h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 12px; }
+    h1 { font-size: clamp(2rem, 4vw, 3rem); }
+    h2 { font-size: clamp(1.5rem, 2vw, 2rem); margin-top: 10px; }
+    h3 { font-size: 1.15rem; }
+    h4 { font-size: 1rem; }
+    p { margin: 0 0 12px; }
+    section { padding: 12px 0 26px; }
+    .section-intro, .small-note { color: var(--muted); }
+    .structure-box {
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+    .subject { background: #e0f2fe; color: #075985; border-color: #bae6fd; }
+    .verb { background: #ede9fe; color: #5b21b6; border-color: #ddd6fe; }
+    .complement { background: #ecfccb; color: #3f6212; border-color: #d9f99d; }
+    .filters-box {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .filter-group {
+      margin-bottom: 14px;
+    }
+    .filter-group:last-child { margin-bottom: 0; }
+    .check-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: white;
+      border: 1px solid #dce6f7;
+      border-radius: 12px;
+      font-size: 0.95rem;
+    }
+    .exercise-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 0.7rem;
+      gap: 18px;
     }
-    @media (max-width: 600px) {
-      body { padding: 0.5rem; }
+    .exercise {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+    .exercise-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .level-badge, .meta-chip { padding: 6px 10px; font-size: 0.8rem; }
+    .meta-chip { background: #f3f4f6; color: #374151; }
+    .basic { background: #e0f2fe; color: #075985; }
+    .intermediate { background: #ede9fe; color: #5b21b6; }
+    .advanced { background: #fff7d6; color: #8a5a00; }
+    .options {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .option {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid #dde6f5;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .answer-area {
+      min-height: 52px;
+      border: 2px dashed #bfd1ff;
+      border-radius: 14px;
+      background: #f8fbff;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .drop-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 0;
+      font-size: 1rem;
+    }
+    .drop-slot {
+      min-width: 120px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 10px;
+      border: 2px dashed #bfd1ff;
+      border-radius: 12px;
+      background: #f8fbff;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+    .drop-slot.filled {
+      border-style: solid;
+      background: #e8f0ff;
+    }
+    .word-bank button, .answer-token {
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor: pointer;
+      border: 1px solid #c7d2fe;
+      background: #eef2ff;
+      color: #3730a3;
+    }
+    .word-bank button.used { opacity: 0.45; cursor: not-allowed; }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cfd8ea;
+      border-radius: 12px;
+      margin: 10px 0;
+      background: white;
+      font-size: 1rem;
+    }
+    button.primary, button.secondary {
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+    }
+    button.primary { background: var(--primary); color: white; }
+    button.primary:hover { background: var(--primary-dark); }
+    button.secondary {
+      background: #e5edff;
+      color: #1e40af;
+      border: 1px solid #cddcff;
+    }
+    .feedback {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 700;
+      display: none;
+    }
+    .feedback.correct {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid #b7e3c7;
+    }
+    .feedback.incorrect {
+      display: block;
+      background: var(--error-bg);
+      color: var(--error);
+      border: 1px solid #f3c4c0;
+    }
+    .feedback.info {
+      display: block;
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid #f3df9d;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background: #e5ecf8;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      transition: width 0.35s ease;
+    }
+    .sticky-panel { position: sticky; top: 16px; }
+    .reference-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .reference-card p { font-size: 0.96rem; }
+    .empty-state {
+      background: #fff8e6;
+      border: 1px solid #f3df9d;
+      color: #8a5a00;
+      border-radius: 16px;
+      padding: 16px;
+      font-weight: 700;
+    }
+    footer { padding: 0 0 36px; color: var(--muted); text-align: center; }
+    @media (max-width: 980px) {
+      .hero-grid, .filters-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <h1>Verb Tenses & Sentence Elements</h1>
-  <p class="small" style="text-align:center; max-width:650px; margin:0 auto 1rem;">
-    Practice identifying sentence elements (subject, verb, object, complements, modifiers) and matching them with the correct verb tenses (present, past, future; simple, continuous, perfect).
-  </p>
-
-  <!-- SECTION 1: Warm-up: Identify sentence elements -->
-  <div class="section" id="section1">
-    <div class="section-header">
-      <h2>1. Warm-up: Sentence elements</h2>
-      <button class="toggle-btn" onclick="toggleSection('section1')">Hide/Show</button>
-    </div>
-    <div class="section-body">
-      <div class="tip">
-        Every complete sentence needs a subject and a predicate, which always includes a verb. Objects, complements, and modifiers add extra information. [web:10]
+  <div class="container">
+    <header>
+      <div class="hero">
+        <div class="hero-grid">
+          <div>
+            <span class="tag">English classroom resource</span>
+            <h1>Practice English tenses and sentence structure</h1>
+            <p>This version lets students choose the difficulty level and the tenses they want to review. It also includes a quick grammar reference for the tenses selected in the current set.</p>
+            <div class="pill-row">
+              <span class="pill">Custom difficulty</span>
+              <span class="pill">Tense selection</span>
+              <span class="pill">Puzzle activities</span>
+              <span class="pill">Randomized tasks</span>
+            </div>
+          </div>
+          <aside class="card sticky-panel" aria-label="Progress panel">
+            <h3>Your progress</h3>
+            <p><strong id="score">0</strong> / <strong id="total">0</strong> correct answers</p>
+            <div class="progress-bar" aria-hidden="true">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p class="small-note" id="progressText">Choose a difficulty and the tenses you want to review.</p>
+            <div class="actions">
+              <button class="secondary" id="checkAllBtn">Check all answers</button>
+              <button class="secondary" id="resetAllBtn">New random set</button>
+            </div>
+          </aside>
+        </div>
       </div>
+    </header>
 
-      <div class="exercise" data-ex="1">
-        <p>
-          a) <span class="sentence-box">The students are reading a novel in the library.</span>
-        </p>
-        <p class="small">
-          Identify the elements: subject (S), main verb (V), object (O), place/time modifier (M).
-        </p>
-        Subject:
-        <input type="text" data-role="s" size="18" placeholder="write the words" />
-        Verb:
-        <input type="text" data-role="v" size="10" />
-        Object:
-        <input type="text" data-role="o" size="16" />
-        Modifier:
-        <input type="text" data-role="m" size="18" />
-        <br/>
-        <button class="check-btn" onclick="checkSentenceElements(1)">Check</button>
-        <button class="reset-btn" onclick="resetExercise(1)">Reset</button>
-        <div class="feedback" id="fb-1"></div>
-      </div>
+    <main>
+      <section>
+        <div class="card">
+          <h2>How English sentences work</h2>
+          <p class="section-intro">The most common basic structure is <strong>Subject + Verb + Complements</strong>. In English, if we add complements, the usual order is <strong>indirect object + direct object + where + when</strong>, although some verbs also use prepositions such as <em>to</em> or <em>for</em>.</p>
+          <div class="sentence-structure">
+            <div class="structure-box subject">Subject → <em>my sister</em></div>
+            <div class="structure-box verb">Verb → <em>gave</em></div>
+            <div class="structure-box complement">IO → <em>me</em></div>
+            <div class="structure-box complement">DO → <em>some notes</em></div>
+            <div class="structure-box complement">Where → <em>in class</em></div>
+            <div class="structure-box complement">When → <em>yesterday</em></div>
+          </div>
+          <p style="margin-top: 14px;"><strong>Example:</strong> My sister gave me some notes in class yesterday.</p>
+          <p class="small-note">This is especially useful for Spanish-speaking learners because Spanish is often more flexible, but in English word order usually carries important grammar information and sounds much more natural when it follows this pattern.</p>
+        </div>
+      </section>
 
-      <div class="exercise" data-ex="2">
-        <p>
-          b) <span class="sentence-box">My brother is a talented musician.</span>
-        </p>
-        <p class="small">
-          Identify: subject (S), linking verb (V), complement (C).
-        </p>
-        Subject:
-        <input type="text" data-role="s" size="16" />
-        Verb:
-        <input type="text" data-role="v" size="10" />
-        Complement:
-        <input type="text" data-role="c" size="18" />
-        <br/>
-        <button class="check-btn" onclick="checkSentenceElements(2)">Check</button>
-        <button class="reset-btn" onclick="resetExercise(2)">Reset</button>
-        <div class="feedback" id="fb-2"></div>
-      </div>
-    </div>
+      <section>
+        <div class="card">
+          <h2>Choose your practice</h2>
+          <p class="section-intro">Students can filter the activities by difficulty and by tense, so each class can work only on the content already covered in the curriculum.</p>
+          <div class="filters-grid">
+            <div class="filters-box">
+              <div class="filter-group">
+                <h3>Difficulty</h3>
+                <div class="difficulty-checks" id="difficultyFilters"></div>
+              </div>
+              <div class="actions">
+                <button class="secondary" id="selectAllLevelsBtn">Select all levels</button>
+                <button class="secondary" id="clearLevelsBtn">Clear levels</button>
+              </div>
+            </div>
+            <div class="filters-box">
+              <div class="filter-group">
+                <h3>Tenses and structures</h3>
+                <div class="tense-checks" id="tenseFilters"></div>
+              </div>
+              <div class="actions">
+                <button class="secondary" id="selectAllTensesBtn">Select all</button>
+                <button class="secondary" id="clearTensesBtn">Clear all</button>
+              </div>
+            </div>
+          </div>
+          <div class="actions" style="margin-top: 18px;">
+            <button class="primary" id="applyFiltersBtn">Apply selection</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Quick tense reference</h2>
+        <p class="section-intro">This section updates according to the tenses selected above, so students can quickly review the main use before answering. British Council explains that future forms depend on function, and the present continuous is often used for future arrangements, while Cambridge-style references distinguish process and result in perfect simple and continuous forms. [web:25][web:60][web:64]</p>
+        <div id="referenceContainer" class="reference-grid"></div>
+      </section>
+
+      <section>
+        <h2>Interactive activities</h2>
+        <p class="section-intro">The page generates a random set based on the levels and tenses selected. Verb tasks can also appear in puzzle format, where students choose the correct form from a bank of options.</p>
+        <div id="emptyMessage" class="empty-state" style="display:none;">No activities match the current filters. Select at least one level and one tense with available exercises.</div>
+        <div id="exerciseContainer" class="exercise-list"></div>
+      </section>
+
+      <section>
+        <div class="card">
+          <h2>Teacher notes</h2>
+          <div class="summary-grid">
+            <div class="mini-card"><h3>Difficulty control</h3><p>Students can work only with basic, intermediate, advanced, or any combination of those levels. [code_file:0][cite:20]</p></div>
+            <div class="mini-card"><h3>Tense control</h3><p>The tense filter helps avoid showing forms that have not yet been covered in a specific class group. [code_file:0][cite:20]</p></div>
+            <div class="mini-card"><h3>Quick reference</h3><p>Each selected tense has a short reminder of its main use so feedback is not limited to right or wrong. [code_file:0][web:25][web:60][web:64]</p></div>
+            <div class="mini-card"><h3>Editable structure</h3><p>You can expand the banks of activities by adding more items to <strong>exercisePools</strong> and by tagging each item with a level and a tense. [code_file:0]</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Ready-to-use classroom resource with customizable grammar practice.</p>
+    </footer>
   </div>
 
-  <!-- SECTION 2: Match tenses to timelines -->
-  <div class="section" id="section2">
-    <div class="section-header">
-      <h2>2. Verb tenses and time</h2>
-      <button class="toggle-btn" onclick="toggleSection('section2')">Hide/Show</button>
-    </div>
-    <div class="section-body">
-      <div class="tip">
-        Present tenses talk about now or routines, past tenses about finished events, and future tenses about things that will happen. Simple, continuous, and perfect tenses give extra detail about time and duration. [web:6][web:12][web:13]
-      </div>
+  <script>
+    const tenseInfo = {
+      'Present Simple': {
+        use: 'Use it for routines, habits, facts, and permanent situations.',
+        example: 'She walks to school every day.'
+      },
+      'Present Continuous': {
+        use: 'Use it for actions happening now or around now.',
+        example: 'They are studying at the moment.'
+      },
+      'Future with will': {
+        use: 'Use it for predictions, spontaneous decisions, offers, and promises.',
+        example: 'I think it will rain later.'
+      },
+      'Future with going to': {
+        use: 'Use it for intentions, prior plans, or predictions based on present evidence.',
+        example: 'We are going to start a new project next week.'
+      },
+      'Present Continuous with future sense': {
+        use: 'Use it for future arrangements that are already organised, often with time and place.',
+        example: 'I am meeting Sara at 5 o’clock tomorrow.'
+      },
+      'Future Continuous': {
+        use: 'Use it for an action that will be in progress at a specific time in the future.',
+        example: 'This time tomorrow, we will be taking the exam.'
+      },
+      'Future Perfect': {
+        use: 'Use it for an action that will be finished before a future time or event.',
+        example: 'By June, they will have completed the course.'
+      },
+      'Past Simple': {
+        use: 'Use it for finished actions at a definite time in the past.',
+        example: 'We visited the museum last Friday.'
+      },
+      'Past Continuous': {
+        use: 'Use it for an action that was in progress at a point in the past or when another action happened.',
+        example: 'I was revising when you called.'
+      },
+      'Present Perfect': {
+        use: 'Use it to connect the past with the present, often for experience, change, or present result.',
+        example: 'She has lost her keys.'
+      },
+      'Present Perfect Continuous': {
+        use: 'Use it for an activity that started in the past and is still continuing, or has just stopped with a visible result, especially when the process matters.',
+        example: 'They have been working all afternoon.'
+      },
+      'Past Perfect': {
+        use: 'Use it for an action completed before another past action or time.',
+        example: 'He had left before I arrived.'
+      },
+      'Past Perfect Continuous': {
+        use: 'Use it for an activity that had been happening up to another moment in the past, often to show duration, background, or cause.',
+        example: 'She was tired because she had been studying for hours.'
+      },
+      'Sentence structure': {
+        use: 'Use subject + verb + complements, normally following the pattern IO + DO + where + when when those elements appear.',
+        example: 'My teacher gave us clear instructions in class yesterday.'
+      }
+    };
 
-      <div class="grid-2">
-        <div class="exercise" data-ex="3">
-          <p>
-            a) <span class="sentence-box">
-              She <strong>is studying</strong> for the exam right now.
-              <span class="tag tag-present">present</span><span class="tag tag-continuous">continuous</span>
-            </span>
-          </p>
-          <p class="small">Choose the time meaning and form.</p>
-          Time:
-          <select data-role="time">
-            <option value="">-- choose --</option>
-            <option value="present">Present</option>
-            <option value="past">Past</option>
-            <option value="future">Future</option>
-          </select>
-          Form:
-          <select data-role="form">
-            <option value="">-- choose --</option>
-            <option value="simple">Simple</option>
-            <option value="continuous">Continuous</option>
-            <option value="perfect">Perfect</option>
-          </select>
-          <br/>
-          <button class="check-btn" onclick="checkTenseType(3)">Check</button>
-          <button class="reset-btn" onclick="resetExercise(3)">Reset</button>
-          <div class="feedback" id="fb-3"></div>
+    const levels = ['basic', 'intermediate', 'advanced'];
+    const selectableTenses = Object.keys(tenseInfo);
+
+    const exercisePools = [
+      { type: 'order', level: 'basic', tense: 'Present Simple', prompt: 'Put the words in order.', words: ['i', 'play', 'basketball', 'on', 'Fridays'], answer: 'I play basketball on Fridays', hint: 'Use subject + verb + complements.' },
+      { type: 'order', level: 'basic', tense: 'Present Continuous', prompt: 'Put the words in order.', words: ['she', 'is', 'doing', 'her', 'homework', 'now'], answer: 'She is doing her homework now', hint: 'Use am/is/are + verb-ing.' },
+      { type: 'order', level: 'basic', tense: 'Past Simple', prompt: 'Put the words in order.', words: ['we', 'watched', 'a', 'film', 'last', 'night'], answer: 'We watched a film last night', hint: 'Use the past simple for a finished past action.' },
+      { type: 'order', level: 'basic', tense: 'Future with will', prompt: 'Put the words in order.', words: ['i', 'will', 'call', 'you', 'later'], answer: 'I will call you later', hint: 'Use will + base verb.' },
+      { type: 'order', level: 'basic', tense: 'Future with going to', prompt: 'Put the words in order.', words: ['we', 'are', 'going', 'to', 'study', 'together', 'tonight'], answer: 'We are going to study together tonight', hint: 'Use be going to + base verb for an intention or plan.' },
+      { type: 'order', level: 'intermediate', tense: 'Present Continuous with future sense', prompt: 'Put the words in order.', words: ['they', 'are', 'meeting', 'the', 'new', 'student', 'tomorrow'], answer: 'They are meeting the new student tomorrow', hint: 'Use the present continuous for an arranged future plan.' },
+      { type: 'order', level: 'intermediate', tense: 'Future Continuous', prompt: 'Put the words in order.', words: ['this', 'time', 'tomorrow', 'we', 'will', 'be', 'taking', 'the', 'test'], answer: 'This time tomorrow we will be taking the test', hint: 'Use will be + verb-ing for an action in progress at a future time.' },
+      { type: 'order', level: 'intermediate', tense: 'Present Perfect', prompt: 'Put the words in order.', words: ['she', 'has', 'already', 'finished', 'her', 'homework'], answer: 'She has already finished her homework', hint: 'Use has/have + past participle.' },
+      { type: 'order', level: 'advanced', tense: 'Future Perfect', prompt: 'Put the words in order.', words: ['by', 'June', 'they', 'will', 'have', 'completed', 'the', 'course'], answer: 'By June they will have completed the course', hint: 'Use will have + past participle for completion before a future point.' },
+      { type: 'order', level: 'advanced', tense: 'Past Perfect', prompt: 'Put the words in order.', words: ['he', 'had', 'left', 'before', 'the', 'lesson', 'started'], answer: 'He had left before the lesson started', hint: 'Use had + past participle for the earlier past action.' },
+      { type: 'order', level: 'advanced', tense: 'Past Perfect Continuous', prompt: 'Put the words in order.', words: ['she', 'had', 'been', 'studying', 'for', 'hours', 'before', 'dinner'], answer: 'She had been studying for hours before dinner', hint: 'Use had been + verb-ing to show duration before another past moment.' },
+      { type: 'order', level: 'basic', tense: 'Sentence structure', prompt: 'Put the words in order.', words: ['my', 'teacher', 'gave', 'us', 'clear', 'instructions', 'in', 'class', 'yesterday'], answer: 'My teacher gave us clear instructions in class yesterday', hint: 'Try subject + verb + IO + DO + where + when.' },
+
+      { type: 'gap', level: 'basic', tense: 'Present Simple', prompt: 'My best friend ____ (walk) to school every day.', answer: 'walks', hint: 'Third person singular takes -s.' },
+      { type: 'gap', level: 'basic', tense: 'Present Continuous', prompt: 'We ____ (study) for the exam at the moment.', answer: 'are studying', hint: 'Use are + verb-ing.' },
+      { type: 'gap', level: 'basic', tense: 'Past Simple', prompt: 'Yesterday, I ____ (finish) my history homework early.', answer: 'finished', hint: 'This is a finished action in the past.' },
+      { type: 'gap', level: 'basic', tense: 'Future with will', prompt: 'I think our team ____ (win) the match.', answer: 'will win', hint: 'After I think, will often introduces a prediction.' },
+      { type: 'gap', level: 'basic', tense: 'Future with going to', prompt: 'Look at those clouds! It ____ (rain).', answer: 'is going to rain', hint: 'Use be going to for a prediction based on present evidence.' },
+      { type: 'gap', level: 'intermediate', tense: 'Present Continuous with future sense', prompt: 'We ____ (meet) the exchange students tomorrow afternoon.', answer: 'are meeting', hint: 'Use the present continuous for a future arrangement.' },
+      { type: 'gap', level: 'intermediate', tense: 'Future Continuous', prompt: 'At 9 p.m., I ____ (do) my homework.', answer: 'will be doing', hint: 'Use will be + verb-ing for an action in progress at a future time.' },
+      { type: 'gap', level: 'intermediate', tense: 'Present Perfect', prompt: 'She ____ (not / see) that new series yet.', answer: 'has not seen', altAnswers: ['hasn\'t seen'], hint: 'Use has not + past participle.' },
+      { type: 'gap', level: 'intermediate', tense: 'Past Continuous', prompt: 'At 8 o’clock last night, we ____ (watch) a documentary.', answer: 'were watching', hint: 'Use was/were + verb-ing for an action in progress in the past.' },
+      { type: 'gap', level: 'advanced', tense: 'Present Perfect Continuous', prompt: 'They ____ (work) on the mural all afternoon.', answer: 'have been working', hint: 'Use have/has been + verb-ing when the activity matters as a process.' },
+      { type: 'gap', level: 'advanced', tense: 'Future Perfect', prompt: 'By next week, she ____ (finish) the reading project.', answer: 'will have finished', hint: 'Use will have + past participle for an action completed before a future point.' },
+      { type: 'gap', level: 'advanced', tense: 'Past Perfect', prompt: 'When I arrived, the film ____ already ____ (start).', answer: 'had already started', hint: 'Use had + past participle for the earlier past action.' },
+      { type: 'gap', level: 'advanced', tense: 'Past Perfect Continuous', prompt: 'He was tired because he ____ (run) for over an hour.', answer: 'had been running', hint: 'Use had been + verb-ing to show duration before another past result.' },
+
+      { type: 'puzzle', level: 'basic', tense: 'Present Simple', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'He', after: 'football every Saturday.', options: ['play', 'plays', 'is playing'], answer: 'plays', hint: 'He/she/it usually takes -s in the present simple.' },
+      { type: 'puzzle', level: 'basic', tense: 'Present Continuous', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'They', after: 'for the maths test right now.', options: ['study', 'are studying', 'studied'], answer: 'are studying', hint: 'Use am/is/are + verb-ing for actions happening now.' },
+      { type: 'puzzle', level: 'basic', tense: 'Past Simple', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'We', after: 'the museum last month.', options: ['visit', 'visited', 'have visited'], answer: 'visited', hint: 'Last month gives a finished past time.' },
+      { type: 'puzzle', level: 'basic', tense: 'Future with will', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'I think it', after: 'later this evening.', options: ['rains', 'will rain', 'is rain'], answer: 'will rain', hint: 'Predictions based on opinion often use will + base verb.' },
+      { type: 'puzzle', level: 'basic', tense: 'Future with going to', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'We', after: 'a new project next week.', options: ['are going to start', 'will starting', 'start'], answer: 'are going to start', hint: 'Use be going to for an intention or prior plan.' },
+      { type: 'puzzle', level: 'intermediate', tense: 'Present Continuous with future sense', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'She', after: 'her cousin on Saturday.', options: ['meets', 'is meeting', 'will met'], answer: 'is meeting', hint: 'Use the present continuous for a future arrangement.' },
+      { type: 'puzzle', level: 'intermediate', tense: 'Future Continuous', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'This time next week, we', after: 'for the final exam.', options: ['will be revising', 'revise', 'have revised'], answer: 'will be revising', hint: 'Use will be + verb-ing.' },
+      { type: 'puzzle', level: 'intermediate', tense: 'Present Perfect', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'She', after: 'her homework already.', options: ['has finished', 'finished', 'is finishing'], answer: 'has finished', hint: 'Use has/have + past participle.' },
+      { type: 'puzzle', level: 'advanced', tense: 'Present Perfect Continuous', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'They', after: 'all afternoon, so they need a break.', options: ['have been working', 'worked', 'had worked'], answer: 'have been working', hint: 'The process is important here.' },
+      { type: 'puzzle', level: 'advanced', tense: 'Future Perfect', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'By 2030, scientists', after: 'new solutions to many problems.', options: ['will have developed', 'develop', 'will be developing'], answer: 'will have developed', hint: 'Use will have + past participle before a future deadline.' },
+      { type: 'puzzle', level: 'advanced', tense: 'Past Perfect', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'When we arrived, the train', after: 'already.', options: ['had left', 'left', 'has left'], answer: 'had left', hint: 'Use the past perfect for the earlier past event.' },
+      { type: 'puzzle', level: 'advanced', tense: 'Past Perfect Continuous', prompt: 'Choose the correct verb piece to complete the sentence.', before: 'She was exhausted because she', after: 'for hours.', options: ['had been studying', 'has been studying', 'studied'], answer: 'had been studying', hint: 'Use had been + verb-ing for background or cause before another past moment.' },
+
+      { type: 'mcq', level: 'basic', tense: 'Present Simple', prompt: 'Choose the correct sentence.', options: ['He go to the gym on Tuesdays.', 'He goes to the gym on Tuesdays.', 'He is go to the gym on Tuesdays.'], answer: 'He goes to the gym on Tuesdays.', hint: 'With he/she/it, the verb usually takes -s.' },
+      { type: 'mcq', level: 'basic', tense: 'Past Simple', prompt: 'Choose the correct option.', options: ['We visit the museum last month.', 'We visited the museum last month.', 'We are visiting the museum last month.'], answer: 'We visited the museum last month.', hint: 'Last month needs the past simple.' },
+      { type: 'mcq', level: 'basic', tense: 'Sentence structure', prompt: 'Which sentence has the best order?', options: ['My sister after school studies English.', 'My sister studies English after school.', 'Studies my sister English after school.'], answer: 'My sister studies English after school.', hint: 'Use subject + verb + complements.' },
+      { type: 'mcq', level: 'basic', tense: 'Future with going to', prompt: 'Choose the best sentence for a prior plan.', options: ['We are going to visit the art gallery on Saturday.', 'We will visited the art gallery on Saturday.', 'We going to visit the art gallery on Saturday.'], answer: 'We are going to visit the art gallery on Saturday.', hint: 'For a prior plan, use be going to + base verb.' },
+      { type: 'mcq', level: 'intermediate', tense: 'Present Continuous with future sense', prompt: 'Choose the best sentence for an arrangement.', options: ['I am meeting the tutor at 6 p.m. tomorrow.', 'I meet the tutor at 6 p.m. tomorrow.', 'I will meeting the tutor at 6 p.m. tomorrow.'], answer: 'I am meeting the tutor at 6 p.m. tomorrow.', hint: 'Future arrangements often use the present continuous.' },
+      { type: 'mcq', level: 'intermediate', tense: 'Future Continuous', prompt: 'Choose the correct sentence.', options: ['This time tomorrow, we will be flying to Rome.', 'This time tomorrow, we will fly being to Rome.', 'This time tomorrow, we flying to Rome.'], answer: 'This time tomorrow, we will be flying to Rome.', hint: 'Use will be + verb-ing.' },
+      { type: 'mcq', level: 'intermediate', tense: 'Present Perfect', prompt: 'Choose the best sentence.', options: ['We have finished the activity already.', 'We have finish the activity already.', 'We finished the activity already yet.'], answer: 'We have finished the activity already.', hint: 'Use have + past participle.' },
+      { type: 'mcq', level: 'intermediate', tense: 'Past Continuous', prompt: 'Choose the correct sentence.', options: ['At eight, they were doing their homework.', 'At eight, they did doing their homework.', 'At eight, they was doing their homework.'], answer: 'At eight, they were doing their homework.', hint: 'Use was/were + verb-ing.' },
+      { type: 'mcq', level: 'advanced', tense: 'Present Perfect Continuous', prompt: 'Choose the best sentence.', options: ['She has been working here since January.', 'She has working here since January.', 'She is been working here since January.'], answer: 'She has been working here since January.', hint: 'Use has/have been + verb-ing.' },
+      { type: 'mcq', level: 'advanced', tense: 'Past Perfect', prompt: 'Choose the correct sentence.', options: ['By the time we arrived, the lesson had started.', 'By the time we arrived, the lesson has started.', 'By the time we arrived, the lesson had start.'], answer: 'By the time we arrived, the lesson had started.', hint: 'Use had + past participle for the earlier past action.' },
+      { type: 'mcq', level: 'advanced', tense: 'Past Perfect Continuous', prompt: 'Choose the correct sentence.', options: ['He was tired because he had been training all morning.', 'He was tired because he has been training all morning.', 'He was tired because he had training all morning.'], answer: 'He was tired because he had been training all morning.', hint: 'Use had been + verb-ing for duration before another past moment.' },
+      { type: 'mcq', level: 'advanced', tense: 'Future Perfect', prompt: 'Choose the correct sentence.', options: ['By next month, they will have completed the project.', 'By next month, they will completed the project.', 'By next month, they have completed the project.'], answer: 'By next month, they will have completed the project.', hint: 'Use will have + past participle.' }
+    ];
+
+    let currentExercises = [];
+    const container = document.getElementById('exerciseContainer');
+    const referenceContainer = document.getElementById('referenceContainer');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const scoreEl = document.getElementById('score');
+    const totalEl = document.getElementById('total');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const difficultyFilters = document.getElementById('difficultyFilters');
+    const tenseFilters = document.getElementById('tenseFilters');
+
+    function normalize(text) {
+      return text.toLowerCase().trim().replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
+    }
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function getCheckedValues(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(input => input.value);
+    }
+
+    function createFilterCheckbox(container, name, value, label, checked = true) {
+      const item = document.createElement('label');
+      item.className = 'check-item';
+      item.innerHTML = `<input type="checkbox" name="${name}" value="${value}" ${checked ? 'checked' : ''}> <span>${label}</span>`;
+      container.appendChild(item);
+    }
+
+    function renderFilterControls() {
+      levels.forEach(level => createFilterCheckbox(difficultyFilters, 'difficulty', level, level.charAt(0).toUpperCase() + level.slice(1), true));
+      selectableTenses.forEach(tense => createFilterCheckbox(tenseFilters, 'tense', tense, tense, ['Present Simple', 'Present Continuous', 'Past Simple', 'Future with will', 'Present Perfect', 'Sentence structure'].includes(tense)));
+    }
+
+    function renderReference(selectedTenses) {
+      referenceContainer.innerHTML = '';
+      const ordered = selectableTenses.filter(t => selectedTenses.includes(t));
+      ordered.forEach(tense => {
+        const info = tenseInfo[tense];
+        const card = document.createElement('article');
+        card.className = 'reference-card';
+        card.innerHTML = `<h3>${tense}</h3><p><strong>Main use:</strong> ${info.use}</p><p><strong>Example:</strong> ${info.example}</p>`;
+        referenceContainer.appendChild(card);
+      });
+    }
+
+    function buildExerciseSet() {
+      const selectedLevels = getCheckedValues('difficulty');
+      const selectedTenses = getCheckedValues('tense');
+      renderReference(selectedTenses);
+
+      const filtered = exercisePools.filter(ex => selectedLevels.includes(ex.level) && selectedTenses.includes(ex.tense));
+      if (!filtered.length) {
+        currentExercises = [];
+        totalEl.textContent = '0';
+        scoreEl.textContent = '0';
+        progressFill.style.width = '0%';
+        progressText.textContent = 'Choose at least one matching level and tense.';
+        emptyMessage.style.display = 'block';
+        container.innerHTML = '';
+        return;
+      }
+
+      emptyMessage.style.display = 'none';
+      const sampleSize = Math.min(20, filtered.length);
+      currentExercises = shuffle(filtered).slice(0, sampleSize).map((ex, index) => ({ ...ex, id: index + 1 }));
+      totalEl.textContent = currentExercises.length;
+      renderExercises();
+    }
+
+    function createExerciseCard(ex) {
+      const wrapper = document.createElement('article');
+      wrapper.className = 'exercise';
+      wrapper.dataset.id = ex.id;
+      wrapper.dataset.type = ex.type;
+
+      let body = '';
+      if (ex.type === 'order') {
+        const shuffledWords = shuffle(ex.words);
+        body = `
+          <div class="answer-area" id="answer-${ex.id}" aria-label="Answer area"></div>
+          <div class="word-bank" id="bank-${ex.id}">
+            ${shuffledWords.map(word => `<button type="button" data-word="${word}">${word}</button>`).join('')}
+          </div>
+        `;
+      }
+      if (ex.type === 'gap') {
+        body = `<label for="input-${ex.id}" class="small-note">Write the correct verb form.</label><input id="input-${ex.id}" type="text" autocomplete="off" placeholder="Type your answer here" />`;
+      }
+      if (ex.type === 'puzzle') {
+        const options = shuffle(ex.options);
+        body = `
+          <div class="drop-line">
+            <span>${ex.before}</span>
+            <div class="drop-slot" id="slot-${ex.id}" data-answer=""></div>
+            <span>${ex.after}</span>
+          </div>
+          <div class="word-bank" id="puzzlebank-${ex.id}">
+            ${options.map(option => `<button type="button" data-piece="${option}">${option}</button>`).join('')}
+          </div>
+          <p class="small-note">Choose one piece. Click the slot to remove it if you want to change your answer.</p>
+        `;
+      }
+      if (ex.type === 'mcq') {
+        body = `
+          <div class="options" role="radiogroup" aria-label="Multiple choice options">
+            ${ex.options.map((opt, idx) => `<label class="option"><input type="radio" name="mcq-${ex.id}" value="${opt}" /> <span>${String.fromCharCode(65 + idx)}. ${opt}</span></label>`).join('')}
+          </div>
+        `;
+      }
+
+      const reference = tenseInfo[ex.tense] ? `<p class="small-note"><strong>Quick reminder:</strong> ${tenseInfo[ex.tense].use}</p>` : '';
+
+      wrapper.innerHTML = `
+        <div class="exercise-meta">
+          <span class="level-badge ${ex.level}">${ex.level}</span>
+          <span class="meta-chip">${ex.tense}</span>
+          <span class="meta-chip">Exercise ${ex.id}</span>
         </div>
-
-        <div class="exercise" data-ex="4">
-          <p>
-            b) <span class="sentence-box">
-              They <strong>have finished</strong> their homework.
-              <span class="tag tag-present">present</span><span class="tag tag-perfect">perfect</span>
-            </span>
-          </p>
-          Time:
-          <select data-role="time">
-            <option value="">-- choose --</option>
-            <option value="present">Present</option>
-            <option value="past">Past</option>
-            <option value="future">Future</option>
-          </select>
-          Form:
-          <select data-role="form">
-            <option value="">-- choose --</option>
-            <option value="simple">Simple</option>
-            <option value="continuous">Continuous</option>
-            <option value="perfect">Perfect</option>
-          </select>
-          <br/>
-          <button class="check-btn" onclick="checkTenseType(4)">Check</button>
-          <button class="reset-btn" onclick="resetExercise(4)">Reset</button>
-          <div class="feedback" id="fb-4"></div>
+        <h3>${ex.prompt}</h3>
+        ${reference}
+        ${body}
+        <div class="actions">
+          <button class="primary" data-check="${ex.id}">Check</button>
+          <button class="secondary" data-showhint="${ex.id}">Hint</button>
         </div>
+        <div class="feedback" id="feedback-${ex.id}" aria-live="polite"></div>
+      `;
+      return wrapper;
+    }
 
-        <div class="exercise" data-ex="5">
-          <p>
-            c) <span class="sentence-box">
-              We <strong>will visit</strong> our grandparents next weekend.
-              <span class="tag tag-future">future</span><span class="tag tag-simple">simple</span>
-            </span>
-          </p>
-          Time:
-          <select data-role="time">
-            <option value="">-- choose --</option>
-            <option value="present">Present</option>
-            <option value="past">Past</option>
-            <option value="future">Future</option>
-          </select>
-          Form:
-          <select data-role="form">
-            <option value="">-- choose --</option>
-            <option value="simple">Simple</option>
-            <option value="continuous">Continuous</option>
-            <option value="perfect">Perfect</option>
-          </select>
-          <br/>
-          <button class="check-btn" onclick="checkTenseType(5)">Check</button>
-          <button class="reset-btn" onclick="resetExercise(5)">Reset</button>
-          <div class="feedback" id="fb-5"></div>
-        </div>
+    function renderExercises() {
+      container.innerHTML = '';
+      currentExercises.forEach(ex => container.appendChild(createExerciseCard(ex)));
+      attachTaskEvents();
+      attachButtonEvents();
+      updateProgress();
+    }
 
-        <div class="exercise" data-ex="6">
-          <p>
-            d) <span class="sentence-box">
-              He <strong>was watching</strong> TV when I called.
-              <span class="tag tag-past">past</span><span class="tag tag-continuous">continuous</span>
-            </span>
-          </p>
-          Time:
-          <select data-role="time">
-            <option value="">-- choose --</option>
-            <option value="present">Present</option>
-            <option value="past">Past</option>
-            <option value="future">Future</option>
-          </select>
-          Form:
-          <select data-role="form">
-            <option value="">-- choose --</option>
-            <option value="simple">Simple</option>
-            <option value="continuous">Continuous</option>
-            <option value="perfect">Perfect</option>
-          </select>
-          <br/>
-          <button class="check-btn" onclick="checkTenseType(6)">Check</button>
-          <button class="reset-btn" onclick="resetExercise(6)">Reset</button>
-          <div class="feedback" id="fb-6"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+    function attachTaskEvents() {
+      currentExercises.filter(ex => ex.type === 'order').forEach(ex => {
+        const bank = document.getElementById(`bank-${ex.id}`);
+        const answerArea = document.getElementById(`answer-${ex.id}`);
+        bank.addEventListener('click', event => {
+          const btn = event.target.closest('button');
+          if (!btn || btn.classList.contains('used')) return;
+          btn.classList.add('used');
+          const token = document.createElement('button');
+          token.type = 'button';
+          token.className = 'answer-token';
+          token.textContent = btn.dataset.word;
+          token.dataset.word = btn.dataset.word;
+          answerArea.appendChild(token);
+        });
+        answerArea.addEventListener('click', event => {
+          const token = event.target.closest('.answer-token');
+          if (!token) return;
+          const word = token.dataset.word;
+          const usedButton = bank.querySelector(`button[data-word="${word}"].used`);
+          if (usedButton) usedButton.classList.remove('used');
+          token.remove();
+        });
+      });
 
-  <!-- SECTION 3: Connect tense and sentence elements -->
-  <div class="section" id="section3">
-    <div class="section-header">
-      <h2>3. Connect tense & elements</h2>
-      <button class="toggle-btn" onclick="toggleSection('section3')">Hide/Show</button>
-    </div>
-    <div class="section-body">
-      <div class="tip">
-        The sentence pattern (S–V, S–V–O, S–V–C, etc.) stays the same when you change the verb tense. [web:13]
-      </div>
+      currentExercises.filter(ex => ex.type === 'puzzle').forEach(ex => {
+        const bank = document.getElementById(`puzzlebank-${ex.id}`);
+        const slot = document.getElementById(`slot-${ex.id}`);
+        bank.addEventListener('click', event => {
+          const btn = event.target.closest('button');
+          if (!btn || btn.classList.contains('used')) return;
+          const current = slot.dataset.answer;
+          if (current) {
+            const previous = bank.querySelector(`button[data-piece="${current}"]`);
+            if (previous) previous.classList.remove('used');
+          }
+          slot.dataset.answer = btn.dataset.piece;
+          slot.textContent = btn.dataset.piece;
+          slot.classList.add('filled');
+          [...bank.querySelectorAll('button')].forEach(button => button.classList.remove('used'));
+          btn.classList.add('used');
+        });
+        slot.addEventListener('click', () => {
+          const current = slot.dataset.answer;
+          if (!current) return;
+          const active = bank.querySelector(`button[data-piece="${current}"]`);
+          if (active) active.classList.remove('used');
+          slot.dataset.answer = '';
+          slot.textContent = '';
+          slot.classList.remove('filled');
+        });
+      });
+    }
 
-      <div class="exercise" data-ex="7">
-        <p>
-          a) Change this present simple sentence into past continuous. Keep the same subject and object.
-        </p>
-        <p class="sentence-box">
-          Original: The children play football in the park every afternoon.
-        </p>
-        <p class="small">
-          Write a new sentence in the past continuous tense (S–V–O–M).
-        </p>
-        <input type="text" data-role="sentence" style="width:100%;" placeholder="Type your sentence here..." />
-        <br/>
-        <button class="check-btn" onclick="checkOpenSentence(7)">Show model answer</button>
-        <button class="reset-btn" onclick="resetExercise(7)">Clear</button>
-        <div class="feedback" id="fb-7"></div>
-      </div>
+    function getUserAnswer(ex) {
+      if (ex.type === 'order') return [...document.querySelectorAll(`#answer-${ex.id} .answer-token`)].map(t => t.dataset.word).join(' ');
+      if (ex.type === 'gap') return document.getElementById(`input-${ex.id}`).value;
+      if (ex.type === 'puzzle') return document.getElementById(`slot-${ex.id}`).dataset.answer || '';
+      if (ex.type === 'mcq') {
+        const checked = document.querySelector(`input[name="mcq-${ex.id}"]:checked`);
+        return checked ? checked.value : '';
+      }
+      return '';
+    }
 
-      <div class="exercise" data-ex="8">
-        <p>
-          b) Complete the sentence with the correct tense and element.
-        </p>
-        <p class="sentence-box">
-          Yesterday at 8 p.m., <input type="text" data-role="s" size="18" placeholder="subject" /
+    function showFeedback(id, type, message) {
+      const box = document.getElementById(`feedback-${id}`);
+      box.className = `feedback ${type}`;
+      box.textContent = message;
+    }
 
+    function isCorrect(ex, userAnswer) {
+      const main = normalize(userAnswer) === normalize(ex.answer);
+      const alternates = (ex.altAnswers || []).some(ans => normalize(userAnswer) === normalize(ans));
+      return main || alternates;
+    }
+
+    function checkExercise(id) {
+      const ex = currentExercises.find(item => item.id === Number(id));
+      const userAnswer = getUserAnswer(ex);
+      if (!userAnswer.trim()) {
+        showFeedback(ex.id, 'info', 'Write, choose, or place an answer first.');
+        updateProgress();
+        return false;
+      }
+      const correct = isCorrect(ex, userAnswer);
+      if (correct) {
+        const reminder = tenseInfo[ex.tense] ? ` Quick reference: ${tenseInfo[ex.tense].use}` : '';
+        showFeedback(ex.id, 'correct', `Correct! Great job.${reminder}`);
+      } else {
+        const reminder = tenseInfo[ex.tense] ? ` Quick reference: ${tenseInfo[ex.tense].use}` : '';
+        showFeedback(ex.id, 'incorrect', `Incorrect. Hint: ${ex.hint}${reminder}`);
+      }
+      updateProgress();
+      return correct;
+    }
+
+    function updateProgress() {
+      const correctCount = currentExercises.filter(ex => {
+        const box = document.getElementById(`feedback-${ex.id}`);
+        return box && box.classList.contains('correct');
+      }).length;
+      scoreEl.textContent = correctCount;
+      const percentage = currentExercises.length ? (correctCount / currentExercises.length) * 100 : 0;
+      progressFill.style.width = `${percentage}%`;
+
+      if (!currentExercises.length) progressText.textContent = 'Choose a difficulty and the tenses you want to review.';
+      else if (correctCount === 0) progressText.textContent = 'A custom set has been created from the selected levels and tenses.';
+      else if (correctCount < Math.ceil(currentExercises.length / 2)) progressText.textContent = 'Good start. Keep checking the tense clues and sentence order.';
+      else if (correctCount < currentExercises.length) progressText.textContent = 'Nice progress. You are moving confidently through the selected grammar points.';
+      else progressText.textContent = 'Excellent. All answers in this custom set are correct.';
+    }
+
+    function attachButtonEvents() {
+      document.querySelectorAll('[data-check]').forEach(btn => {
+        btn.addEventListener('click', () => checkExercise(btn.dataset.check));
+      });
+      document.querySelectorAll('[data-showhint]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const ex = currentExercises.find(item => item.id === Number(btn.dataset.showhint));
+          const reminder = tenseInfo[ex.tense] ? ` Quick reference: ${tenseInfo[ex.tense].use}` : '';
+          showFeedback(ex.id, 'info', `Hint: ${ex.hint}${reminder}`);
+        });
+      });
+    }
+
+    function setAll(name, checked) {
+      document.querySelectorAll(`input[name="${name}"]`).forEach(input => input.checked = checked);
+    }
+
+    document.getElementById('applyFiltersBtn').addEventListener('click', buildExerciseSet);
+    document.getElementById('resetAllBtn').addEventListener('click', buildExerciseSet);
+    document.getElementById('checkAllBtn').addEventListener('click', () => currentExercises.forEach(ex => checkExercise(ex.id)));
+    document.getElementById('selectAllLevelsBtn').addEventListener('click', () => setAll('difficulty', true));
+    document.getElementById('clearLevelsBtn').addEventListener('click', () => setAll('difficulty', false));
+    document.getElementById('selectAllTensesBtn').addEventListener('click', () => setAll('tense', true));
+    document.getElementById('clearTensesBtn').addEventListener('click', () => setAll('tense', false));
+
+    renderFilterControls();
+    buildExerciseSet();
+  </script>
+</body>
+</html>
